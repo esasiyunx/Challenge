@@ -1,0 +1,2159 @@
+openapi: "3.0.2"
+servers:
+  - description: Local Dev
+    url: https://localhost:5000
+  - description: Mock Service
+    url: https://mock.example.com/example
+  - description: Dev Api
+    url: https://api.dev.example.com/example
+  - description: Staging Api
+    url: https://api.staging.example.com/example
+  - description: Prod Api
+    url: https://api.example.com/example
+info:
+  title: Agrio Example Service Api
+  description: Agrio Example Services Documentation
+  contact:
+    email: admin@sophietech.com
+  version: "v1"
+security:
+  - bearerAuth: [] 
+externalDocs:
+  description: Documentation
+  url: https://doc-example.azurewebsites.net/example
+
+paths:
+  /api/storage:
+    post:
+        tags:
+         - Storage Definition
+        summary: Create new Storage
+        description: Create new Storage
+        operationId: createStorage
+        parameters:
+          - $ref: "#/components/parameters/AcceptLanguageParameter"
+        requestBody:
+          description: Create Storage request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/storageCreateModel"
+          required: true
+        responses:
+          "201":
+            description: Created
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/storageListModel"
+            headers:
+              Content-Language:
+                $ref: "#/components/headers/Content-Language"
+              Location:
+                $ref: "#/components/headers/Location"
+          "204":
+            description: "No Content"
+            $ref: "#/components/responses/NoContent"         
+          "400":
+            description: "Bad Request"
+            $ref: "#/components/responses/BadRequest"          
+          "401":
+            description: "Unauthorized"
+            $ref: "#/components/responses/Unauthorized"
+          "403":
+            description: "Forbidden"
+            $ref: "#/components/responses/Forbidden"
+          "404":
+            description: "Not Found"
+            $ref: "#/components/responses/NotFound"
+          "406":
+            description: "Not Acceptable"
+            $ref: "#/components/responses/NotAcceptable"
+          "409":
+            description: "Conflict"
+            $ref: "#/components/responses/Conflict"  
+          "429":
+            description: "Too Many Requests"
+            $ref: "#/components/responses/TooManyRequests"
+          default:
+            description: "Default"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/storageListModel"  
+        security:
+          - bearerAuth: []
+        x-yaver-security-roles: superadmin,admin
+    get:
+      tags:
+        - Storage Definition
+      summary: Get all Storage  
+      description: Get all Storage
+      operationId: getAllStorage
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/Offset"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Term"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/storageListModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/storageListModel"     
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+  
+  /api/storage/{storageId}:
+    get:
+      tags:
+        - Storage Definition
+      summary: Get Storage  
+      description: Get Storage
+      operationId: getStorageById
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StorageParameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/storageListModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/storageListModel"  
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+    patch:
+      tags:
+        - Storage Definition
+      summary: Update Storage
+      description: Update Storage
+      operationId: updateStorage
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StorageParameter"
+      requestBody:
+        description: Storage request for update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/storageUpdateModel"
+        required: true
+      responses:
+        "204":  
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "415":
+          description: "Unsupported Media Type"
+          $ref: "#/components/responses/UnsupportedMediaType"
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: Default
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/storageListModel"
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin  
+    delete:
+      tags:
+        - Storage Definition
+      summary: Delete Storage
+      description: Delete Storage
+      operationId: deleteStorage
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StorageParameter"
+      responses:
+        "204":  
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: Default
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/storageListModel"
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin  
+
+  /api/stock:
+    post:
+        tags:
+         - Stock Definition
+        summary: Create new Stock
+        description: Create new Stock
+        operationId: createStock
+        parameters:
+          - $ref: "#/components/parameters/AcceptLanguageParameter"
+        requestBody:
+          description: Create Stock request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockCreateModel"
+          required: true
+        responses:
+          "201":
+            description: Created
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/stockListModel"
+            headers:
+              Content-Language:
+                $ref: "#/components/headers/Content-Language"
+              Location:
+                $ref: "#/components/headers/Location"
+          "204":
+            description: "No Content"
+            $ref: "#/components/responses/NoContent"         
+          "400":
+            description: "Bad Request"
+            $ref: "#/components/responses/BadRequest"          
+          "401":
+            description: "Unauthorized"
+            $ref: "#/components/responses/Unauthorized"
+          "403":
+            description: "Forbidden"
+            $ref: "#/components/responses/Forbidden"
+          "404":
+            description: "Not Found"
+            $ref: "#/components/responses/NotFound"
+          "406":
+            description: "Not Acceptable"
+            $ref: "#/components/responses/NotAcceptable"
+          "409":
+            description: "Conflict"
+            $ref: "#/components/responses/Conflict"  
+          "429":
+            description: "Too Many Requests"
+            $ref: "#/components/responses/TooManyRequests"
+          default:
+            description: "Default"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/stockListModel"  
+        security:
+          - bearerAuth: []
+        x-yaver-security-roles: superadmin,admin
+    get:
+      tags:
+        - Stock Definition
+      summary: Get all Stock  
+      description: Get all Stock
+      operationId: getAllStock
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/Offset"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Term"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/stockListModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockListModel"     
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+
+  /api/stock/{stockId}:
+    get:
+      tags:
+        - Stock Definition
+      summary: Get Stock  
+      description: Get Stock
+      operationId: getStockById
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StockParameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/stockListModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockListModel"  
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+    patch:
+      tags:
+        - Stock Definition
+      summary: Update Stock
+      description: Update Stock
+      operationId: updateStock
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StockParameter"
+      requestBody:
+        description: Stock request for update
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/stockUpdateModel"
+        required: true
+      responses:
+        "204":  
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict" 
+        "415":
+          description: "Unsupported Media Type"
+          $ref: "#/components/responses/UnsupportedMediaType"   
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: Default
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockListModel"
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin  
+    delete:
+      tags:
+        - Stock Definition
+      summary: Delete Stock
+      description: Delete Stock
+      operationId: deleteStock
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/StockParameter"
+      responses:
+        "204":  
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: Default
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockListModel"
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin  
+
+  /api/stock/stockOpeningBalance:
+    post:
+        tags:
+         - Stock Opening Balance Definition
+        summary: Create new Stock Opening Balance
+        description: Create new Stock Opening Balance
+        operationId: createStockOpeningBalance
+        parameters:
+          - $ref: "#/components/parameters/AcceptLanguageParameter"
+        requestBody:
+          description: Create Stock Opening Balance request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockOpeningBalanceCreateModel"
+          required: true
+        responses:
+          "201":
+            description: Created
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/stockOpeningBalanceListModel"
+            headers:
+              Content-Language:
+                $ref: "#/components/headers/Content-Language"
+              Location:
+                $ref: "#/components/headers/Location"
+          "204":
+            description: "No Content"
+            $ref: "#/components/responses/NoContent"         
+          "400":
+            description: "Bad Request"
+            $ref: "#/components/responses/BadRequest"          
+          "401":
+            description: "Unauthorized"
+            $ref: "#/components/responses/Unauthorized"
+          "403":
+            description: "Forbidden"
+            $ref: "#/components/responses/Forbidden"
+          "404":
+            description: "Not Found"
+            $ref: "#/components/responses/NotFound"
+          "406":
+            description: "Not Acceptable"
+            $ref: "#/components/responses/NotAcceptable"
+          "409":
+            description: "Conflict"
+            $ref: "#/components/responses/Conflict"  
+          "429":
+            description: "Too Many Requests"
+            $ref: "#/components/responses/TooManyRequests"
+          default:
+            description: "Default"
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/stockOpeningBalanceListModel"  
+        security:
+          - bearerAuth: []
+        x-yaver-security-roles: superadmin,admin
+
+  /api/stock/stockMovements:
+    get:
+      tags:
+        - Stock Movements Definition
+      summary: Get all Stock Movements  
+      description: Get all Stock Movements
+      operationId: getAllStockMovements
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/Offset"
+        - $ref: "#/components/parameters/Limit"
+        - $ref: "#/components/parameters/Term"
+        - $ref: "#/components/parameters/Sort"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/stockMovementsListModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/stockMovementsListModel"     
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+
+  /api/city/{countryId}:
+    get:
+      tags:
+        - City Definition
+      summary: Get all Cities  
+      description: Get all Cities
+      operationId: getAllCities
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/CountryParameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/cityModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/cityModel"     
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+
+  /api/town/{cityId}:
+    get:
+      tags:
+        - Town Definition
+      summary: Get all town  
+      description: Get all town
+      operationId: getAllTown
+      parameters:
+        - $ref: "#/components/parameters/AcceptLanguageParameter"
+        - $ref: "#/components/parameters/CityParameter"
+      responses:
+        "200":
+          description: "Success"
+          content:
+            application/json:
+              schema:
+                $ref:
+                 "#/components/schemas/townModel"
+          headers:
+            Content-Language:
+              $ref: "#/components/headers/Content-Language"       
+        "204":
+          description: "No Content"
+          $ref: "#/components/responses/NoContent"         
+        "400":
+          description: "Bad Request"
+          $ref: "#/components/responses/BadRequest"          
+        "401":
+          description: "Unauthorized"
+          $ref: "#/components/responses/Unauthorized"
+        "403":
+          description: "Forbidden"
+          $ref: "#/components/responses/Forbidden"
+        "404":
+          description: "Not Found"
+          $ref: "#/components/responses/NotFound"
+        "406":
+          description: "Not Acceptable"
+          $ref: "#/components/responses/NotAcceptable"
+        "409":
+          description: "Conflict"
+          $ref: "#/components/responses/Conflict"  
+        "429":
+          description: "Too Many Requests"
+          $ref: "#/components/responses/TooManyRequests"
+        default:
+          description: "Default"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/townModel"     
+      security:
+        - bearerAuth: []
+      x-yaver-security-roles: superadmin,admin
+
+components:
+  schemas:
+    storageCreateModel:
+      type: object
+      additionalProperties: false
+      properties:
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32     
+
+        city:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          maximum: 1024
+          minimum: 0
+          format: int32
+
+        town:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          maximum: 1024
+          minimum: 0
+          format: int32   
+
+        address:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 255
+              message: err.maxLength    
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        description:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 500
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32            
+
+    storageListModel:
+      type: object
+      additionalProperties: false
+      properties:
+      
+        id:
+          type: string
+          format: uuid
+          x-yaver-ui:
+            type: INPUT
+            inputType: hidden
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32     
+
+        city:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+
+        town:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+
+    storageUpdateModel:
+      type: object
+      additionalProperties: false
+      properties:
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32     
+
+        city:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+
+        town:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0           
+
+    stockCreateModel:
+      type: object
+      additionalProperties: false
+      properties:
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+        
+        unitSet: 
+          type: string
+          enum:
+            - weight
+            - capacity
+            - type3
+            - quantity
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+        
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        barcode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        description:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 500
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32   
+
+        costPrice:
+          type: number
+          format: double
+          example: 0
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          maximum: 1024
+          minimum: 0
+          
+        salePrice:
+          type: number
+          format: double
+          example: 0
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          maximum: 1024
+          minimum: 0
+
+        stockList:
+          type: object
+          allOf:
+            - $ref: "#/components/schemas/stockListDictionaryModel"
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.dictionaryField
+
+      required:
+        - stockCode
+        - stockName
+        - unitSet
+        - unit
+
+    stockListModel:
+      type: object
+      additionalProperties: false
+      properties:
+
+        id:
+          type: string
+          format: uuid
+          x-yaver-ui:
+            type: INPUT
+            inputType: hidden
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+        
+        barcode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          maximum: 1024
+          minimum: 0
+          format: int32
+     
+      required:
+        - stockCode
+        - stockName
+
+    stockUpdateModel:
+      type: object
+      additionalProperties: false
+      properties:
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+        
+        barcode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+     
+      required:
+        - stockCode
+        - stockName    
+
+    stockOpeningBalanceCreateModel:
+      type: object
+      additionalProperties: false
+      properties:
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+
+        date:
+          type: string
+          format: date-time
+          example: "2022-04-01"
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: INPUT
+            inputType: date
+            placeholder: label.dateField
+          maxLength: 32
+
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32   
+
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+     
+      required:
+        - stockCode
+        - stockName
+        - date
+        - storageName
+        - unit
+        - quantity
+
+    stockOpeningBalanceListModel:
+      type: object
+      additionalProperties: false
+      properties:
+
+        id:
+          type: string
+          format: uuid
+          x-yaver-ui:
+            type: INPUT
+            inputType: hidden
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+      
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+
+        date:
+          type: string
+          format: date-time
+          example: "2022-04-01"
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: INPUT
+            inputType: date
+            placeholder: label.dateField
+          maxLength: 32
+
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32   
+
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+     
+      required:
+        - stockCode
+        - stockName
+        - date
+        - storageName
+        - unit
+        - quantity
+
+    stockMovementsListModel:
+      type: object
+      additionalProperties: false
+      properties:
+
+        id:
+          type: string
+          format: uuid
+          x-yaver-ui:
+            type: INPUT
+            inputType: hidden
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+
+        date:
+          type: string
+          format: date-time
+          example: "2022-04-01"
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: INPUT
+            inputType: date
+            placeholder: label.dateField
+          maxLength: 32
+
+        referenceNo:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          maximum: 1024
+          minimum: 0
+          format: int32
+
+        storageName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32   
+        
+        description:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 500
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32   
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0         
+
+    stockListDictionaryModel:
+      type: object
+
+      properties:
+
+        id:
+          type: string
+          format: uuid
+          x-yaver-ui:
+            type: INPUT
+            inputType: hidden
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+        stockCode:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+        
+        stockName:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32         
+        
+        unit: 
+          type: string
+          enum:
+            - ton
+            - kg
+            - gr
+            - lit
+            - number
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.exampleType
+
+        quantity:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: int32
+          maximum: 1024
+          minimum: 0
+     
+      required:
+        - stockCode
+        - stockName
+
+    cityModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: uuid
+          maximum: 1024
+          minimum: 0
+
+        name:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32
+
+    townModel:
+      type: object
+      additionalProperties: false
+      properties:
+        id:
+          type: integer
+          example: 1
+          x-yaver-validators:
+            - type: required
+              message: err.required
+          x-yaver-ui:
+            type: SELECT
+            placeholder: label.integerField
+          format: uuid
+          maximum: 1024
+          minimum: 0
+
+        name:
+          type: string
+          example: somestring
+          x-yaver-validators:
+            - type: required
+              message: err.required
+            - type: minLength
+              param: 2
+              message: err.minLength
+            - type: maxLength
+              param: 55
+              message: err.maxLength  
+          x-yaver-ui:
+            type: INPUT
+            inputType: text
+        
+            placeholder: label.stringField
+          pattern: ^example-[0-9a-z]+$
+          maxLength: 32          
+ 
+    ErrorViewModel:
+      type: object
+      additionalProperties: false
+      properties:
+        code:
+          type: string
+          example: fC9LZX
+          maxLength: 55
+          pattern: ^example-[0-9a-z]+$
+        title:
+          type: string
+          example: Invalid request parameters
+          maxLength: 55
+          pattern: ^example-[0-9a-z]+$
+        detail:
+          type: string
+          example: The provided resource parameters are not valid.
+          maxLength: 55
+          pattern: ^example-[0-9a-z]+$
+        errors:
+          type: array
+          items:
+            type: string
+            example: validation error message
+            maxLength: 55
+            pattern: ^example-[0-9a-z]+$
+          maxItems: 100
+      required:
+        - code
+        - title
+        - detail
+
+  headers:
+    Location:
+      schema:
+        type: string
+        format: url
+        pattern: ^example-[0-9a-z]+$
+        maxLength: 32
+      description: A link to created resource
+      example: 3
+    Content-Language:
+      schema:
+        type: string
+        enum:
+          - tr-TR
+          - en-US
+      description: the language(s) intended for the audience
+      example: tr-TR
+    X-RateLimit-Limit:
+      schema:
+        type: integer
+        format: int32
+        maximum: 1024
+        minimum: 0
+
+      description: Request limit per hour.
+    X-RateLimit-Remaining:
+      schema:
+        type: integer
+        format: int32
+        maximum: 1024
+        minimum: 0
+
+      description: The number of requests left for the time window.
+    X-RateLimit-Reset:
+      schema:
+        type: string
+        format: date-time
+        maxLength: 32
+      description: The UTC date/time at which the current rate limit window resets.  
+  
+  parameters:
+    DeviceHashHeaderParameter:
+      name: X-Device-Hash
+      in: header
+      required: true
+      schema:
+        type: string
+        pattern: ^example-[0-9a-z]+$
+        maxLength: 32
+
+    AcceptLanguageParameter:
+      name: Accept-Language
+      in: header
+      required: true
+      schema:
+        type: string
+        enum:
+          - tr
+          - en
+          - tr-TR
+          - en-US
+      description: language(s) client is able to understand, and which locale variant is preferred
+      example: tr
+    Offset:
+      name: offset
+      in: query
+      description: The number of items to skip before starting to collect the result set.
+      schema:
+        type: integer
+        minimum: 0
+        default: 0
+        format: int32
+        maximum: 1024
+    Limit:
+      name: limit
+      in: query
+      description: The numbers of items to return.
+      schema:
+        type: integer
+        minimum: 1
+        maximum: 100
+        default: 20
+        format: int32
+    Term:
+      name: term
+      in: query
+      description:
+        Filter argument in which to retrieve the results. Basic text search on
+        relevant fields
+      schema:
+        type: string
+        maxLength: 32
+        pattern: ^example-[0-9a-z]+$
+    Sort:
+      name: sort
+      in: query
+      description:
+        Order in which to retrieve the results. Multiple sort criteria can not
+        be passed
+      schema:
+        type: string
+        maxLength: 32
+        pattern: ^example-[0-9a-z]+$
+
+    # Contract Parameters
+    StorageParameter:
+      name: storageId
+      in: path
+      schema:
+        type: string
+        format: uuid
+        maxLength: 32
+        pattern: ^[1-9]+[0-9]*$
+      required: true
+      description: Storage Id
+    StockParameter:
+      name: stockId
+      in: path
+      schema:
+        type: string
+        format: uuid
+        maxLength: 32
+        pattern: ^[1-9]+[0-9]*$
+      required: true
+      description: Stock Id  
+    CountryParameter:
+      name: countryId
+      in: path
+      schema:
+        type: string
+        format: uuid
+        maxLength: 32
+        pattern: ^[1-9]+[0-9]*$
+      required: true
+      description: Country Id
+    CityParameter:
+      name: cityId
+      in: path
+      schema:
+        type: string
+        format: uuid
+        maxLength: 32
+        pattern: ^[1-9]+[0-9]*$
+      required: true
+      description: City Id  
+  responses:
+    BadRequest:
+      description: The specified resource was not valid
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    Forbidden:
+      description: You are not allowed to take specified action
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    Conflict:
+      description: The specified resource already persisted
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    UnsupportedMediaType:
+      description: The payload format is in an unsupported format
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"      
+    NotFound:
+      description: The specified resource was not found
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    Unauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    NotAcceptable:
+      description: an appropriate representation of the requested resource could not be found on this server
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"
+    TooManyRequests:
+      description: You sent too many requests, try again in a while.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/ErrorViewModel"
+      headers:
+        Content-Language:
+          $ref: "#/components/headers/Content-Language"         
+    NoContent:
+      description: No Content
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat	: JWT
+
+x-yaver:
+  resources:
+    - name: Storage
+      schemas:
+        create: StorageCreateModel
+        update: StorageUpdateModel
+        list: StorageListModel
+      operations:
+        create: createStorage
+        get: getStorageById
+        update: updateStorage
+        list: getAllStorage
+        delete: deleteStorage
+    - name: Stock
+      schemas:
+        create: StockCreateModel
+        update: StockUpdateModel
+        list: StockListModel
+      operations:
+        create: createStock
+        get: getStockById
+        update: updateStock
+        list: getAllStock
+        delete: deleteStock
+    - name: StockOpeningBalance
+      schemas:
+        create: StockOpeningBalanceCreateModel
+        list: StockOpeningBalanceListModel
+      operations:
+        create: createStockOpeningBalance        
+        list: getAllStockOpeningBalance
+    - name: StockMovements
+      schemas:
+        list: StockMovementsListModel
+      operations:  
+        list: getAllStockMovements 
+    - name: City
+      schemas:
+        list: CityModel
+      operations:  
+        list: getAllCities
+    - name: Town
+      schemas:
+        list: TownModel
+      operations:  
+        list: getAllTown    
+# ...
